@@ -1,0 +1,6 @@
+# ESLint Ignore Configuration File
+# See http://eslint.org/docs/user-guide/configuring#ignoring-files-and-directories for more details.
+
+src/registerServiceWorker.js
+public/**
+node_modules/**
