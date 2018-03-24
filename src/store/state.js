@@ -1,4 +1,5 @@
 export const initState = {
   types: [],
-  pokemons: []
+  pokemons: [],
+  favouritePokemons: []
 }

@@ -15,7 +15,7 @@ export default class Provider extends PureComponent {
   actions = Object.keys(this.props.actions).reduce((r, v) => ({
     ...r,
     [v]: (args) => {
-      const res = this.props.actions[v](this.state, args)
+      const res = this.props.actions[v](args, this.state)
       res.then
         ? res.then(resThen => this.setState(resThen))
         : this.setState(res)

@@ -11,6 +11,7 @@ const { Header, Content } = Layout
 class Home extends Component {
   static propTypes = {
     types: arrayOf(string).isRequired,
+    favouritePokemons: arrayOf(string).isRequired,
     pokemons: arrayOf(
       shape({
         id: string,
@@ -22,7 +23,8 @@ class Home extends Component {
     ).isRequired,
     actions: shape({
       getTypes: func,
-      getPokemons: func
+      getPokemons: func,
+      toggleFavouritePokemons: func
     }).isRequired
   }
 
@@ -40,9 +42,11 @@ class Home extends Component {
 
   handleSearch = () => this.props.actions.getPokemons(this.state.selectedTypes)
 
+  handleToggleFavourite = id => this.props.actions.toggleFavouritePokemons(id)
+
   render() {
     const { selectedTypes } = this.state
-    const { types, pokemons } = this.props
+    const { types, pokemons, favouritePokemons } = this.props
 
     return (
       <Fragment>
@@ -57,7 +61,7 @@ class Home extends Component {
         <Content>
           <Row>
             {pokemons.map(i => (
-              <Col xs={6} key={i.id} style={{ minHeight: '385px' }}>
+              <Col xs={6} key={i.id} style={{ minHeight: '400px' }}>
                 <Card
                   cover={<img alt={i.id} src={i.imageUrl} />}
                 >
@@ -68,7 +72,11 @@ class Home extends Component {
                       HP: {i.hp}
                     </Col>
                     <Col xs={6}>
-                      <Icon type="heart-o" style={{ fontSize: '26px', cursor: 'pointer' }} />
+                      <Icon
+                        type={favouritePokemons.indexOf(i.id) !== -1 ? 'heart' : 'heart-o'}
+                        style={{ fontSize: '26px', cursor: 'pointer' }}
+                        onClick={() => this.handleToggleFavourite(i.id)}
+                      />
                     </Col>
                   </Row>
                 </Card>
@@ -81,4 +89,4 @@ class Home extends Component {
   }
 }
 
-export default connect(['types', 'pokemons'])(Home)
+export default connect(['types', 'pokemons', 'favouritePokemons'])(Home)
