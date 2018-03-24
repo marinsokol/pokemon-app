@@ -1,33 +1,20 @@
-import React, { Component } from 'react'
-import { shape } from 'prop-types'
+import React from 'react'
+import { BrowserRouter, Route } from 'react-router-dom'
+import { Layout } from 'antd'
 
-import { connect } from './context-store'
+import Home from './routes/Home'
+import Favourites from './routes/Favourites'
 
-class App extends Component {
-  static propTypes = {
-    actions: shape().isRequired
-  }
+import Sider from './components/Sider'
 
-  state = {}
-
-  componentDidMount() {
-    this.props.actions.getPokemons('haha')
-  }
-
-  render() {
-    console.log('app ->', this)
-
-    return (
-      <div className="App">
-        <header className="App-header">
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    )
-  }
-}
-
-export default connect(['pokemons'])(App)
+export default () => (
+  <BrowserRouter>
+    <Layout style={{ minHeight: '100vh' }}>
+      <Sider />
+      <Layout>
+        <Route exact path="/" component={Home} />
+        <Route path="/favourites" component={Favourites} />
+      </Layout>
+    </Layout>
+  </BrowserRouter>
+)
