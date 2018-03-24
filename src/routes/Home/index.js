@@ -11,7 +11,11 @@ const { Header, Content } = Layout
 class Home extends Component {
   static propTypes = {
     types: arrayOf(string).isRequired,
-    favouritePokemons: arrayOf(string).isRequired,
+    favouritePokemons: arrayOf(
+      shape({
+        id: string
+      })
+    ).isRequired,
     pokemons: arrayOf(
       shape({
         id: string,
@@ -42,7 +46,7 @@ class Home extends Component {
 
   handleSearch = () => this.props.actions.getPokemons(this.state.selectedTypes)
 
-  handleToggleFavourite = id => this.props.actions.toggleFavouritePokemons(id)
+  handleToggleFavourite = pokemon => this.props.actions.toggleFavouritePokemons(pokemon)
 
   render() {
     const { selectedTypes } = this.state
@@ -73,9 +77,9 @@ class Home extends Component {
                     </Col>
                     <Col xs={6}>
                       <Icon
-                        type={favouritePokemons.indexOf(i.id) !== -1 ? 'heart' : 'heart-o'}
+                        type={favouritePokemons.findIndex(v => i.id === v.id) !== -1 ? 'heart' : 'heart-o'}
                         style={{ fontSize: '26px', cursor: 'pointer' }}
-                        onClick={() => this.handleToggleFavourite(i.id)}
+                        onClick={() => this.handleToggleFavourite(i)}
                       />
                     </Col>
                   </Row>

@@ -22,17 +22,25 @@ export const getPokemons = async (types) => {
   })
 
   return {
-    pokemons: data.cards
+    pokemons: data.cards.map(i => ({
+      id: i.id,
+      imageUrl: i.imageUrl,
+      name: i.name,
+      supertype: i.supertype,
+      hp: i.hp,
+      subtype: i.subtype,
+      types: i.types
+    }))
   }
 }
 
-export const toggleFavouritePokemons = (id, { favouritePokemons }) => {
-  if (favouritePokemons.indexOf(id) !== -1) {
+export const toggleFavouritePokemons = (pokemon, { favouritePokemons }) => {
+  if (favouritePokemons.findIndex(i => i.id === pokemon.id) !== -1) {
     return {
-      favouritePokemons: favouritePokemons.filter(i => i !== id)
+      favouritePokemons: favouritePokemons.filter(i => i.id !== pokemon.id)
     }
   }
   return {
-    favouritePokemons: [...favouritePokemons, id]
+    favouritePokemons: [...favouritePokemons, pokemon]
   }
 }
