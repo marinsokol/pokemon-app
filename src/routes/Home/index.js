@@ -1,15 +1,25 @@
 import React, { Component, Fragment } from 'react'
 import { shape, func, arrayOf, string } from 'prop-types'
-import { Layout, Select, Button, Icon } from 'antd'
+import { Layout, Row, Card, Col, Icon } from 'antd'
 
 import { connect } from 'context-store'
 
+import Search from './components/Search'
+
 const { Header, Content } = Layout
-const { Option } = Select
 
 class Home extends Component {
   static propTypes = {
     types: arrayOf(string).isRequired,
+    pokemons: arrayOf(
+      shape({
+        id: string,
+        imageUrl: string,
+        name: string,
+        supertype: string,
+        hp: string
+      })
+    ).isRequired,
     actions: shape({
       getTypes: func,
       getPokemons: func
@@ -32,28 +42,39 @@ class Home extends Component {
 
   render() {
     const { selectedTypes } = this.state
-    const { types } = this.props
-    console.log(this)
+    const { types, pokemons } = this.props
+
     return (
       <Fragment>
         <Header style={{ alignItems: 'center', justifyContent: 'space-around', display: 'flex' }}>
-          <Select
-            mode="multiple"
-            style={{ width: '80%' }}
-            value={selectedTypes}
-            onChange={this.handleSelect}
-          >
-            {types.map(i => (
-              <Option key={i}> {i} </Option>
-            ))}
-          </Select>
-          <Button onClick={this.handleSearch}>
-            <Icon type="search" />
-            Search
-          </Button>
+          <Search
+            types={types}
+            selectedTypes={selectedTypes}
+            onSearch={this.handleSearch}
+            onSelect={this.handleSelect}
+          />
         </Header>
         <Content>
-          Home
+          <Row>
+            {pokemons.map(i => (
+              <Col xs={6} key={i.id} style={{ minHeight: '385px' }}>
+                <Card
+                  cover={<img alt={i.id} src={i.imageUrl} />}
+                >
+                  <Row>
+                    <Col xs={18}>
+                      <b>{i.name}</b> <br />
+                      {i.supertype} <br />
+                      HP: {i.hp}
+                    </Col>
+                    <Col xs={6}>
+                      <Icon type="heart-o" style={{ fontSize: '26px', cursor: 'pointer' }} />
+                    </Col>
+                  </Row>
+                </Card>
+              </Col>
+            ))}
+          </Row>
         </Content>
       </Fragment>
     )
