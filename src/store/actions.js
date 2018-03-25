@@ -11,7 +11,7 @@ export const getTypes = async () => {
   return data
 }
 
-export const getPokemons = async (types) => {
+export const getPokemons = async (types, { allPokemons }) => {
   const { data } = await axios({
     method: 'get',
     url: `${config.API_URL}cards`,
@@ -22,6 +22,7 @@ export const getPokemons = async (types) => {
   })
 
   return {
+    allPokemons: [...allPokemons, data.cards],
     pokemons: data.cards.map(i => ({
       id: i.id,
       imageUrl: i.imageUrl,
@@ -34,13 +35,13 @@ export const getPokemons = async (types) => {
   }
 }
 
-export const toggleFavouritePokemons = (pokemon, { favouritePokemons }) => {
-  if (favouritePokemons.findIndex(i => i.id === pokemon.id) !== -1) {
+export const toggleFavouritePokemons = (id, { favouritePokemons }) => {
+  if (favouritePokemons.indexOf(id) !== -1) {
     return {
-      favouritePokemons: favouritePokemons.filter(i => i.id !== pokemon.id)
+      favouritePokemons: favouritePokemons.filter(i => i.id !== id)
     }
   }
   return {
-    favouritePokemons: [...favouritePokemons, pokemon]
+    favouritePokemons: [...favouritePokemons, id]
   }
 }

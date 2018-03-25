@@ -1,21 +1,18 @@
 import React, { Component, Fragment } from 'react'
 import { shape, func, arrayOf, string } from 'prop-types'
-import { Layout, Row, Card, Col, Icon } from 'antd'
+import { Layout } from 'antd'
 
 import { connect } from 'context-store'
 
 import Search from './components/Search'
+import Pokemons from './components/Pokemons'
 
 const { Header, Content } = Layout
 
 class Home extends Component {
   static propTypes = {
     types: arrayOf(string).isRequired,
-    favouritePokemons: arrayOf(
-      shape({
-        id: string
-      })
-    ).isRequired,
+    favouritePokemons: arrayOf(string).isRequired,
     pokemons: arrayOf(
       shape({
         id: string,
@@ -46,7 +43,7 @@ class Home extends Component {
 
   handleSearch = () => this.props.actions.getPokemons(this.state.selectedTypes)
 
-  handleToggleFavourite = pokemon => this.props.actions.toggleFavouritePokemons(pokemon)
+  handleToggleFavourite = id => this.props.actions.toggleFavouritePokemons(id)
 
   render() {
     const { selectedTypes } = this.state
@@ -63,30 +60,13 @@ class Home extends Component {
           />
         </Header>
         <Content>
-          <Row>
-            {pokemons.map(i => (
-              <Col xs={6} key={i.id} style={{ minHeight: '400px' }}>
-                <Card
-                  cover={<img alt={i.id} src={i.imageUrl} />}
-                >
-                  <Row>
-                    <Col xs={18}>
-                      <b>{i.name}</b> <br />
-                      {i.supertype} <br />
-                      HP: {i.hp}
-                    </Col>
-                    <Col xs={6}>
-                      <Icon
-                        type={favouritePokemons.findIndex(v => i.id === v.id) !== -1 ? 'heart' : 'heart-o'}
-                        style={{ fontSize: '26px', cursor: 'pointer' }}
-                        onClick={() => this.handleToggleFavourite(i)}
-                      />
-                    </Col>
-                  </Row>
-                </Card>
-              </Col>
-            ))}
-          </Row>
+          <Pokemons
+            pokemons={pokemons.map(i => ({
+              ...i,
+              favourited: favouritePokemons.indexOf(i.id) !== -1
+            }))}
+            onToggleFavouritePokemons={this.handleToggleFavourite}
+          />
         </Content>
       </Fragment>
     )
