@@ -40,7 +40,7 @@ export const getPokemons = async (types, { allPokemons }) => {
 export const toggleFavouritePokemons = (id, { favouritePokemons }) => {
   if (favouritePokemons.indexOf(id) !== -1) {
     return {
-      favouritePokemons: favouritePokemons.filter(i => i.id !== id)
+      favouritePokemons: favouritePokemons.filter(i => i !== id)
     }
   }
   return {
