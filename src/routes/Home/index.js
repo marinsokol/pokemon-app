@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import { shape, func, arrayOf, string } from 'prop-types'
+import { shape, func, arrayOf, string, number } from 'prop-types'
 import { Layout } from 'antd'
 
 import { connect } from 'context-store'
@@ -13,6 +13,7 @@ class Home extends Component {
   static propTypes = {
     types: arrayOf(string).isRequired,
     favouritePokemons: arrayOf(string).isRequired,
+    count: number.isRequired,
     pokemons: arrayOf(
       shape({
         id: string,
@@ -30,6 +31,7 @@ class Home extends Component {
   }
 
   state = {
+    page: 1,
     selectedTypes: []
   }
 
@@ -45,9 +47,11 @@ class Home extends Component {
 
   handleToggleFavourite = id => this.props.actions.toggleFavouritePokemons(id)
 
+  handlePageChange = page => this.setState({ page })
+
   render() {
-    const { selectedTypes } = this.state
-    const { types, pokemons, favouritePokemons } = this.props
+    const { selectedTypes, page } = this.state
+    const { types, pokemons, favouritePokemons, count } = this.props
 
     return (
       <Fragment>
@@ -61,11 +65,13 @@ class Home extends Component {
         </Header>
         <Content>
           <Pokemons
-            pokemons={pokemons.map(i => ({
+            count={count}
+            pokemons={pokemons.slice((page - 1) * 20, page * 20).map(i => ({
               ...i,
               favourited: favouritePokemons.indexOf(i.id) !== -1
             }))}
             onToggleFavouritePokemons={this.handleToggleFavourite}
+            onPageChange={this.handlePageChange}
           />
         </Content>
       </Fragment>
@@ -73,4 +79,4 @@ class Home extends Component {
   }
 }
 
-export default connect(['types', 'pokemons', 'favouritePokemons'])(Home)
+export default connect(['types', 'pokemons', 'favouritePokemons', 'count'])(Home)

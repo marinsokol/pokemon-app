@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { uniqBy } from 'lodash'
 
 import config from 'config'
 
@@ -22,7 +23,8 @@ export const getPokemons = async (types, { allPokemons }) => {
   })
 
   return {
-    allPokemons: [...allPokemons, data.cards],
+    count: data.cards.length,
+    allPokemons: uniqBy([...allPokemons, ...data.cards], 'id'),
     pokemons: data.cards.map(i => ({
       id: i.id,
       imageUrl: i.imageUrl,

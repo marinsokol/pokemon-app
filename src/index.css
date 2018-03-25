@@ -9,3 +9,8 @@ body {
 .ant-layout-header {
   color: white;
 }
+
+.ant-menu {
+  position: fixed;
+  max-width: 200px;
+}
