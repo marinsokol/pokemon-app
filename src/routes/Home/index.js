@@ -79,4 +79,10 @@ class Home extends Component {
   }
 }
 
-export default connect(['types', 'pokemons', 'favouritePokemons', 'count'])(Home)
+const mapStore = (state, props) => {
+  console.log(state)
+  console.log(props)
+  return 'hah'
+}
+
+export default connect(['types', 'pokemons', 'favouritePokemons', 'count'], mapStore)(Home)
