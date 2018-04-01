@@ -8,8 +8,7 @@ const { Content } = Layout
 
 class Favourites extends Component {
   static propTypes = {
-    favouritePokemons: arrayOf(string).isRequired,
-    allPokemons: arrayOf(
+    pokemons: arrayOf(
       shape({
         id: string,
         imageUrl: string,
@@ -25,20 +24,16 @@ class Favourites extends Component {
 
   state = {}
 
-  getPokemons = () => {
-    const { allPokemons, favouritePokemons } = this.props
-
-    return favouritePokemons.map(id => allPokemons.find(i => i.id === id))
-  }
-
   handleToggleFavourite = id => this.props.actions.toggleFavouritePokemons(id)
 
   render() {
+    const { pokemons } = this.props
+
     return (
       <Fragment>
         <Content>
-          <Row style={{ display: 'flex', flexWrap: 'wrap' }}>
-            {this.getPokemons().map(i => (
+          <Row className="row-pokemons">
+            {pokemons.map(i => (
               <Col xs={6} key={i.id}>
                 <Card
                   cover={<img alt={i.id} src={i.imageUrl} />}
@@ -52,7 +47,6 @@ class Favourites extends Component {
                     <Col xs={6}>
                       <Icon
                         type={i.favourited ? 'heart' : 'heart-o'}
-                        style={{ fontSize: '26px', cursor: 'pointer' }}
                         onClick={() => this.handleToggleFavourite(i.id)}
                       />
                     </Col>
@@ -67,4 +61,11 @@ class Favourites extends Component {
   }
 }
 
-export default connect(['allPokemons', 'favouritePokemons'])(Favourites)
+const mapStore = state => ({
+  pokemons: state.favouritePokemons.map(id => ({
+    ...state.allPokemons.find(i => i.id === id),
+    favourited: true
+  }))
+})
+
+export default connect(mapStore)(Favourites)

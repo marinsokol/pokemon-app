@@ -12,6 +12,17 @@ export const getTypes = async () => {
   return data
 }
 
+export const getPokemon = async (id) => {
+  const { data } = await axios({
+    method: 'get',
+    url: `${config.API_URL}cards/${id}`
+  })
+
+  return {
+    allPokemons: [data.card]
+  }
+}
+
 export const getPokemons = async (types, { allPokemons }) => {
   const { data } = await axios({
     method: 'get',

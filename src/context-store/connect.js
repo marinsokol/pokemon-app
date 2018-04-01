@@ -2,10 +2,13 @@ import React from 'react'
 
 import { Context } from './index'
 
-export default (select, func) => Cmpnt => props => (
+export default select => Cmpnt => props => (
   <Context.Consumer>
     {({ store, actions }) => {
-      console.log(func(store, props));
+      if (typeof select === 'function') {
+        return (<Cmpnt {...props} {...select(store, props)} actions={actions} />)
+      }
+
       const selected = select.reduce((r, v) => ({
         ...r,
         [v]: store[v]

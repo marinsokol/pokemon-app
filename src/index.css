@@ -6,6 +6,10 @@ body {
   font-family: sans-serif;
 }
 
+a {
+  color: black;
+}
+
 .ant-layout-header {
   color: white;
 }
@@ -13,4 +17,34 @@ body {
 .ant-menu {
   position: fixed;
   max-width: 200px;
+}
+
+.home-header {
+  align-items: center; 
+  justify-content: space-around;
+  display: flex
+}
+
+.home-pagination {
+  display: flex;
+  justify-content: center;
+  padding: 10px
+}
+
+.row-pokemons {
+  display: flex;
+  flex-wrap: wrap
+}
+
+.row-pokemons .anticon {
+  font-size: 26px;
+  cursor: pointer;
+}
+
+.details img {
+  width: 100%
+}
+
+.details .col {
+  padding: 10px;
 }

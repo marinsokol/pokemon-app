@@ -12,7 +12,6 @@ const { Header, Content } = Layout
 class Home extends Component {
   static propTypes = {
     types: arrayOf(string).isRequired,
-    favouritePokemons: arrayOf(string).isRequired,
     count: number.isRequired,
     pokemons: arrayOf(
       shape({
@@ -51,11 +50,11 @@ class Home extends Component {
 
   render() {
     const { selectedTypes, page } = this.state
-    const { types, pokemons, favouritePokemons, count } = this.props
+    const { types, pokemons, count } = this.props
 
     return (
       <Fragment>
-        <Header style={{ alignItems: 'center', justifyContent: 'space-around', display: 'flex' }}>
+        <Header className="home-header">
           <Search
             types={types}
             selectedTypes={selectedTypes}
@@ -66,10 +65,7 @@ class Home extends Component {
         <Content>
           <Pokemons
             count={count}
-            pokemons={pokemons.slice((page - 1) * 20, page * 20).map(i => ({
-              ...i,
-              favourited: favouritePokemons.indexOf(i.id) !== -1
-            }))}
+            pokemons={pokemons.slice((page - 1) * 20, page * 20)}
             onToggleFavouritePokemons={this.handleToggleFavourite}
             onPageChange={this.handlePageChange}
           />
@@ -79,10 +75,13 @@ class Home extends Component {
   }
 }
 
-const mapStore = (state, props) => {
-  console.log(state)
-  console.log(props)
-  return 'hah'
-}
+const mapStore = state => ({
+  types: state.types,
+  pokemons: state.pokemons.map(i => ({
+    ...i,
+    favourited: state.favouritePokemons.indexOf(i.id) !== -1
+  })),
+  count: state.count
+})
 
-export default connect(['types', 'pokemons', 'favouritePokemons', 'count'], mapStore)(Home)
+export default connect(mapStore)(Home)
