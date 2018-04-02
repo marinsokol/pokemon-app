@@ -48,3 +48,8 @@ a {
 .details .col {
   padding: 10px;
 }
+
+.details .col-title {
+  font-weight: bold;
+  font-size: 15px;
+}

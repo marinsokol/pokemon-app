@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { shape, string, arrayOf, func } from 'prop-types'
-import { Layout, Row, Col } from 'antd'
+import { Layout, Row, Col, Card } from 'antd'
 
 import { connect } from 'context-store'
 
@@ -33,6 +33,8 @@ class Details extends Component {
     const pokemon = this.props.allPokemons.find(i => i.id === this.props.match.params.id)
     if (!pokemon) return null
 
+    console.log(pokemon)
+
     return (
       <Content className="details">
         <Row>
@@ -40,17 +42,25 @@ class Details extends Component {
             <img alt={pokemon.id} src={pokemon.imageUrl} />
           </Col>
           <Col className="col" xs={14}>
-            <Row>
-              <Col xs={6}>
+            <Card>
+              <Col className="col-title" xs={6}>
                 {pokemon.name}
               </Col>
-              <Col xs={12}>
+              <Col className="col-title" xs={12}>
                 {pokemon.supertype} {pokemon.subtype}
               </Col>
-              <Col xs={6}>
+              <Col className="col-title" xs={6}>
                 HP: {pokemon.hp}
               </Col>
-            </Row>
+            </Card>
+            <Card title={pokemon.ability.name}>
+              <p>{pokemon.ability.text}</p>
+            </Card>
+            {pokemon.attacks.map(i => (
+              <Card title={`${i.name} | ${i.damage}`} key={i.name}>
+                <p>{i.text}</p>
+              </Card>
+            ))}
           </Col>
         </Row>
       </Content>
