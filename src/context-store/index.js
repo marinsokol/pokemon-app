@@ -1,11 +1,8 @@
-import { createContext } from 'react'
+import React, { createContext } from 'react'
 
-import Provider from './Provider'
-import connect from './connect'
+import ContextProvider from './Provider'
+import ContextConnect from './connect'
 
 export const Context = createContext()
-
-export {
-  connect,
-  Provider
-}
+export const connect = ContextConnect(Context)
+export const Provider = props => <ContextProvider {...props} Context={Context} />

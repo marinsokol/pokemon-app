@@ -1,10 +1,9 @@
 import React, { PureComponent } from 'react'
 import { node, shape } from 'prop-types'
 
-import { Context } from './index'
-
 export default class Provider extends PureComponent {
   static propTypes = {
+    Context: shape().isRequired,
     children: node.isRequired,
     state: shape().isRequired,
     actions: shape().isRequired
@@ -23,6 +22,7 @@ export default class Provider extends PureComponent {
   }), {})
 
   render() {
+    const { Context } = this.props
     return (
       <Context.Provider
         value={{

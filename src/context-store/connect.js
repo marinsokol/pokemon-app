@@ -1,8 +1,8 @@
 import React from 'react'
 
-import { Context } from './index'
+// import { Context } from './index'
 
-export default select => Cmpnt => props => (
+export default Context => select => Cmpnt => props => (
   <Context.Consumer>
     {({ store, actions }) => {
       if (typeof select === 'function') {
