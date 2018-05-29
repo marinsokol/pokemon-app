@@ -26,6 +26,9 @@ class Home extends Component {
       getTypes: func,
       getPokemons: func,
       toggleFavouritePokemons: func
+    }).isRequired,
+    history: shape({
+      push: func
     }).isRequired
   }
 
@@ -48,6 +51,8 @@ class Home extends Component {
 
   handlePageChange = page => this.setState({ page })
 
+  handlePathChange = url => () => this.props.history.push(url)
+
   render() {
     const { selectedTypes, page } = this.state
     const { types, pokemons, count } = this.props
@@ -68,6 +73,7 @@ class Home extends Component {
             pokemons={pokemons.slice((page - 1) * 20, page * 20)}
             onToggleFavouritePokemons={this.handleToggleFavourite}
             onPageChange={this.handlePageChange}
+            onPathChange={this.handlePathChange}
           />
         </Content>
       </Fragment>

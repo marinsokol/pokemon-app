@@ -1,9 +1,8 @@
 import React, { Fragment } from 'react'
-import { Link } from 'react-router-dom'
 import { arrayOf, string, func, shape, number } from 'prop-types'
 import { Row, Col, Card, Icon, Pagination } from 'antd'
 
-const Pokemons = ({ count, pokemons, onToggleFavouritePokemons, onPageChange }) => (
+const Pokemons = ({ count, pokemons, onToggleFavouritePokemons, onPageChange, onPathChange }) => (
   <Fragment>
     <Row className="row-pokemons">
       {pokemons.map(i => (
@@ -11,7 +10,7 @@ const Pokemons = ({ count, pokemons, onToggleFavouritePokemons, onPageChange }) 
           <Card
             cover={<img alt={i.id} src={i.imageUrl} />}
           >
-            <Link to={`/pokemon-details/${i.id}`}>
+            <div onClick={onPathChange(`/pokemon-details/${i.id}`)}>
               <Row>
                 <Col xs={18}>
                   <b>{i.name}</b> <br />
@@ -29,7 +28,7 @@ const Pokemons = ({ count, pokemons, onToggleFavouritePokemons, onPageChange }) 
                   />
                 </Col>
               </Row>
-            </Link>
+            </div>
           </Card>
         </Col>
       ))}
@@ -59,7 +58,8 @@ Pokemons.propTypes = {
     })
   ).isRequired,
   onToggleFavouritePokemons: func,
-  onPageChange: func
+  onPageChange: func,
+  onPathChange: func
 }
 
 export default Pokemons

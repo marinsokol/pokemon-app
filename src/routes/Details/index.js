@@ -53,8 +53,8 @@ class Details extends Component {
                 HP: {pokemon.hp}
               </Col>
             </Card>
-            <Card title={pokemon.ability.name}>
-              <p>{pokemon.ability.text}</p>
+            <Card title={pokemon.ability ? pokemon.ability.name : ''}>
+              <p>{pokemon.ability ? pokemon.ability.text : ''}</p>
             </Card>
             {pokemon.attacks.map(i => (
               <Card title={`${i.name} | ${i.damage}`} key={i.name}>
