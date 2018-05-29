@@ -1,7 +1,5 @@
 import React from 'react'
 
-// import { Context } from './index'
-
 export default Context => select => Cmpnt => props => (
   <Context.Consumer>
     {({ store, actions }) => {

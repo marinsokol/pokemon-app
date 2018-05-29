@@ -15,6 +15,12 @@
     "browser" : true
   },
 
+  "globals": {
+    "describe": true,
+    "it": true,
+    "expect": true
+  },
+
   "rules": {
     "semi": ["error", "never"],
     "max-len": ["warn", 160],
