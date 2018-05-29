@@ -26,8 +26,8 @@ const Search = ({ selectedTypes, types, onSelect, onSearch }) => (
 Search.propTypes = {
   selectedTypes: arrayOf(string).isRequired,
   types: arrayOf(string).isRequired,
-  onSelect: func.isRequired,
-  onSearch: func.isRequired
+  onSelect: func,
+  onSearch: func
 }
 
 export default Search
