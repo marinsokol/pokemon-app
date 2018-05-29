@@ -11,6 +11,7 @@ describe('Pokemons', () => {
     supertype: 'Pokémon',
     hp: '110'
   }]
+  
   it('should be defined', () => {
     expect(Pokemons).toBeDefined()
   })

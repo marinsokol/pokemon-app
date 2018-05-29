@@ -9,7 +9,7 @@ import Pokemons from './components/Pokemons'
 
 const { Header, Content } = Layout
 
-class Home extends Component {
+export class HomeComponent extends Component {
   static propTypes = {
     types: arrayOf(string).isRequired,
     count: number.isRequired,
@@ -37,7 +37,7 @@ class Home extends Component {
     selectedTypes: []
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.actions.getTypes()
   }
 
@@ -90,4 +90,4 @@ const mapStore = state => ({
   count: state.count
 })
 
-export default connect(mapStore)(Home)
+export default connect(mapStore)(HomeComponent)
