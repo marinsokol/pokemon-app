@@ -6,7 +6,7 @@ import { connect } from 'context-store'
 
 const { Content } = Layout
 
-class Favourites extends Component {
+export class Favourites extends Component {
   static propTypes = {
     pokemons: arrayOf(
       shape({

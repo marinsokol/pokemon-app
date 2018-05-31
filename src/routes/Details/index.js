@@ -6,7 +6,7 @@ import { connect } from 'context-store'
 
 const { Content } = Layout
 
-class Details extends Component {
+export class Details extends Component {
   static propTypes = {
     allPokemons: arrayOf(
       shape()
@@ -32,8 +32,6 @@ class Details extends Component {
   render() {
     const pokemon = this.props.allPokemons.find(i => i.id === this.props.match.params.id)
     if (!pokemon) return null
-
-    console.log(pokemon)
 
     return (
       <Content className="details">
